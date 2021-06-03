@@ -35,9 +35,7 @@ import Home from "./components/home/Home";
 
 // 라우터에 로딩되는 컴포넌트는 컨테이너 컴포넌트
 const Todo = lazy(() => import("./components/todo-render-scope/Todo"));
-const Contact = lazy(() =>
-  import("./components/contact-render-scope/ContactMaterial")
-);
+const Contact = lazy(() => import("./components/contact/Contact"));
 
 const drawerWidth = "240px";
 
