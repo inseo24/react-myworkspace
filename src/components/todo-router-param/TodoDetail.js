@@ -51,12 +51,12 @@ const TodoDetail = () => {
                 size="small"
                 variant="outlined"
                 color="primary"
-                // onClick={() => {
-                //   history.push("/todo");
-                // }}
                 onClick={() => {
-                  history.replace("/todo");
+                  history.push("/todo");
                 }}
+                // onClick={() => {
+                //   history.replace("/todo");
+                // }}
                 // onClick={() => {
                 //   history.goBack(-1);
                 // }}
