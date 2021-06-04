@@ -9,7 +9,7 @@ import { useParams, useHistory } from "react-router-dom";
 
 import TodoComment from "./TodoComment";
 
-import { list } from "./data";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,8 +32,10 @@ const TodoDetail = () => {
   const { id } = useParams();
   // console.log(id);
   // URL 매개변수는 문자열로 들어옴 숫자값 비교면 변환 후 비교
-  const todo = list.filter((todo) => parseFloat(id) === parseFloat(todo.id))[0];
-  console.log(todo);
+  const todo = useSelector(
+    (state) => state.todo.filter((todo) => todo.id === parseInt(id))[0]
+  );
+  // console.log(todo);
 
   return (
     <>
