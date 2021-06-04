@@ -2,7 +2,7 @@ import List from "@material-ui/core/List";
 import { useSelector } from "react-redux";
 import TodoItem from "./TodoItem";
 
-const TodoList = ({ ulRef, onRemove, onSave }) => {
+const TodoList = () => {
   // useSelctor는 redux store의 state를 선택(select)
   // const 하위state변수 = useSelector((전체state) => 하위state)
 
@@ -11,15 +11,9 @@ const TodoList = ({ ulRef, onRemove, onSave }) => {
 
   return (
     <div>
-      <List ref={ulRef} style={{ height: "40vh", overflowY: "auto" }}>
-        {todoList.map((todo, index) => (
-          <TodoItem
-            key={index}
-            index={index}
-            todo={todo}
-            onRemove={onRemove}
-            onSave={onSave}
-          />
+      <List style={{ height: "40vh", overflowY: "auto" }}>
+        {todoList.map((todo) => (
+          <TodoItem key={todo.id} todo={todo} />
         ))}
       </List>
     </div>

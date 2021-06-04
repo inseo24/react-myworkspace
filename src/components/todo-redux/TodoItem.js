@@ -9,7 +9,7 @@ import { useState, useRef } from "react";
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 
-const TodoItem = ({ index, todo }) => {
+const TodoItem = ({ todo }) => {
   const [isEdit, setIsEdit] = useState(todo.isEdit);
   const history = useHistory(); // 코드를 이용하여 경로 이동 제어를 할 수 있음
   const dispatch = useDispatch();

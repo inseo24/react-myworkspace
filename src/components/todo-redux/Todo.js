@@ -1,11 +1,12 @@
-import TodoContainer from "./TodoContainer";
-
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Hidden from "@material-ui/core/Hidden";
 
 import { Divider, Typography } from "@material-ui/core";
+
+import TodoForm from "./TodoForm";
+import TodoList from "./TodoList";
 
 const useStyles = makeStyles((theme) => ({
   formRoot: {
@@ -37,7 +38,8 @@ const Todo = () => {
           <Paper className={classes.paper}>
             <Typography variant="h3">To-Do</Typography>
             <Divider style={{ marginTop: "1rem", marginBottom: "2rem" }} />
-            <TodoContainer />
+            <TodoForm />
+            <TodoList />
           </Paper>
         </Grid>
         <Hidden xsDown>
