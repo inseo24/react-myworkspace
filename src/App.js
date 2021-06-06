@@ -46,7 +46,7 @@ const store = createStore(rootReducer);
 // 라우터에 로딩되는 컴포넌트는 컨테이너 컴포넌트
 const Todo = lazy(() => import("./components/todo-redux/Todo"));
 const TodoDetail = lazy(() => import("./components/todo-redux/TodoDetail"));
-const Contact = lazy(() => import("./components/Contact"));
+const Contact = lazy(() => import("./components/contact/Contact"));
 
 const drawerWidth = "240px";
 
