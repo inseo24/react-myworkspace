@@ -8,7 +8,9 @@ import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
 
 import { ThemeProvider } from "@material-ui/styles";
 
+// 리덕스 스토어 만들기1
 import { createStore } from "redux";
+// 리덕스 스토어 만들기4
 import { Provider } from "react-redux";
 
 // Core Components
@@ -37,17 +39,19 @@ import Home from "./components/home/Home";
 
 // ./redux :
 // redux.js , ./redux/index.js
+// 리덕스 스토어 만들기2
 import rootReducer from "./redux";
 
 // rootReduer로 redux store 생성
+// 리덕스 스토어 만들기3(index의 rootReducer 연결)
 const store = createStore(rootReducer);
 
 // 라우터에 로딩되는 컴포넌트는 컨테이너 컴포넌트
 const Todo = lazy(() => import("./components/todo-redux/Todo"));
 const TodoDetail = lazy(() => import("./components/todo-redux/TodoDetail"));
-const Contact = lazy(() => import("./components/contact/Contact"));
+const Contact = lazy(() => import("./components/contact-redux/Contact"));
 const ContactDetail = lazy(() =>
-  import("./components/contact-router-param/ContactDetail")
+  import("./components/contact-redux/ContactDetail")
 );
 
 const drawerWidth = "240px";
@@ -144,6 +148,7 @@ function App() {
 
   return (
     // Provider 하위 컴포넌트들에 redux store를 쓸 수 있게 해줌
+    // 리덕스 스토어 만들기5
     <Provider store={store}>
       {/* // https://material-ui.com/styles/api/#themeprovider */}
       <ThemeProvider theme={theme}>
