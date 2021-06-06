@@ -31,7 +31,16 @@ const ContactItem = ({
           <Check />
         </Button>
       </TableCell>
-      {!isEdit && <TableCell>{contact.name}</TableCell>}
+      {!isEdit && (
+        <TableCell
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            history.push(`/contacts/${contact.id}`);
+          }}
+        >
+          {contact.name}
+        </TableCell>
+      )}
       {!isEdit && <TableCell>{contact.number}</TableCell>}
       {!isEdit && <TableCell>{contact.mail}</TableCell>}
       {!isEdit && (
