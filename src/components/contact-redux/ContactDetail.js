@@ -42,9 +42,9 @@ const ContactDetail = () => {
     <>
       <Grid container spacing={3} className={classes.container}>
         <Hidden xsDown>
-          <Grid item sm={1} md={2} lg={3} />
+          <Grid item xs={1} sm={2} md={3} lg={4} />
         </Hidden>
-        <Grid item xs={12} sm={10} md={8} lg={8}>
+        <Grid item xs={12} sm={10} md={8} lg={6}>
           <Paper className={classes.paper}>
             <Typography variant="h5">Contact</Typography>
             <Divider style={{ marginTop: "1rem", marginBottom: "2rem" }} />
@@ -64,7 +64,10 @@ const ContactDetail = () => {
           </Paper>
         </Grid>
         {contact.comments && (
-          <Paper style={{ marginTop: "0.8rem" }} className={classes.paper}>
+          <Paper
+            style={{ marginTop: "0.9rem", marginLeft: "0.8rem" }}
+            className={classes.paper}
+          >
             <List>
               {contact.comments.map((comment, index) => (
                 <ContactComment key={index} index={index} comment={comment} />
@@ -73,7 +76,7 @@ const ContactDetail = () => {
           </Paper>
         )}
         <Hidden xsDown>
-          <Grid item sm={1} md={2} lg={3} />
+          <Grid item xs={1} sm={2} md={3} lg={4} />
         </Hidden>
       </Grid>
     </>
