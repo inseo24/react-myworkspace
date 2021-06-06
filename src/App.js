@@ -5,7 +5,6 @@ import { Suspense, lazy, useState } from "react";
 // https://material-ui.com/customization/color/
 // https://material-ui.com/styles/api/#themeprovider
 import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
-import { green, purple } from "@material-ui/core/colors";
 
 import { ThemeProvider } from "@material-ui/styles";
 
@@ -47,6 +46,9 @@ const store = createStore(rootReducer);
 const Todo = lazy(() => import("./components/todo-redux/Todo"));
 const TodoDetail = lazy(() => import("./components/todo-redux/TodoDetail"));
 const Contact = lazy(() => import("./components/contact/Contact"));
+const ContactDetail = lazy(() =>
+  import("./components/contact-router-param/ContactDetail")
+);
 
 const drawerWidth = "240px";
 
@@ -96,10 +98,10 @@ function App() {
     palette: {
       // type: "dark",
       primary: {
-        main: green[600],
+        main: "#bb6bc9",
       },
       secondary: {
-        main: purple[600],
+        main: "#ab47bc",
       },
     },
   });
@@ -199,7 +201,8 @@ function App() {
                   <Route path="/todo" component={Todo} exact></Route>
                   {/* :매개변수명 -> 컴포넌트에서 변수처럼 받을 수 있음 */}
                   <Route path="/todo/:id" component={TodoDetail}></Route>
-                  <Route path="/contacts" component={Contact}></Route>
+                  <Route path="/contacts" component={Contact} exact></Route>
+                  <Route path="/contacts/:id" component={ContactDetail}></Route>
                 </Switch>
               </Suspense>
             </main>
