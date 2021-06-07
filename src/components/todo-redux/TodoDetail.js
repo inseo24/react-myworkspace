@@ -52,7 +52,7 @@ const TodoDetail = () => {
               <Button
                 size="small"
                 variant="outlined"
-                color="primary"
+                color="secondary"
                 onClick={() => {
                   history.push("/todo");
                 }}

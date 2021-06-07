@@ -12,28 +12,28 @@ import {
 
 const BarChartSample = ({ data }) => {
   const pm10Color = (val) => {
-    let color = "#329fff";
+    let color = "#29b6f6";
 
     if (val > 30 && val <= 80) {
-      color = "#00c73c";
+      color = "#66bb6a";
     } else if (val > 80 && val <= 150) {
-      color = "#fd9b5a";
+      color = "#ffca28";
     } else if (val > 150) {
-      color = "#ff5959";
+      color = "#d32f2f";
     }
 
     return color;
   };
 
   const pm25Color = (val) => {
-    let color = "#329fff";
+    let color = "#29b6f6";
 
     if (val > 15 && val <= 35) {
-      color = "#00c73c";
+      color = "#66bb6a";
     } else if (val > 35 && val <= 75) {
-      color = "#fd9b5a";
+      color = "#ffca28";
     } else if (val > 75) {
-      color = "#ff5959";
+      color = "#d32f2f";
     }
 
     return color;

@@ -40,7 +40,7 @@ const TodoForm = () => {
       <Button
         style={{ width: "10%" }}
         variant="contained"
-        color="primary"
+        color="secondary"
         onClick={add}
       >
         입력

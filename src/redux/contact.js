@@ -61,9 +61,7 @@ const contact = (state = initialState, action) => {
         contact.id === action.payload.id ? { ...action.payload } : contact
       );
 
-    // cancel 고쳐야함
     case "CANCEL_CONTACT":
-      // 배열요소 리턴 -> 배열크기 변동 안됨 == 특정 조건에 맞는 요소만 리턴 == map
       return state.map((contact) =>
         contact.id === action.payload.id ? { ...action.payload } : contact
       );

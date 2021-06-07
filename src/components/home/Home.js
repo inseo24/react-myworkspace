@@ -5,6 +5,7 @@ import Hidden from "@material-ui/core/Hidden";
 
 import BarChartSample from "./BarChartSample";
 import LineChartSample from "./LineChartSample";
+import ComposedChartSample from "./ComposedChartSample";
 
 const useStyles = makeStyles((theme) => ({
   // 내부 페이퍼에 스타일을 지정
@@ -33,7 +34,7 @@ const Home = () => {
     { sido: "sejong", pm10: 22, pm25: 6 },
     { sido: "chungbuk", pm10: 34, pm25: 14 },
     { sido: "chungnam", pm10: 13, pm25: 7 },
-    { sido: "daejeon", pm10: 20, pm25: 7 },
+    { sido: "daejeon", pm10: 51, pm25: 7 },
     { sido: "gyeongbuk", pm10: 23, pm25: 10 },
     { sido: "gyeongnam", pm10: 17, pm25: 9 },
     { sido: "daegu", pm10: 21, pm25: 9 },
@@ -113,7 +114,7 @@ const Home = () => {
       </Hidden>
       <Grid item xs={12} sm={12} lg={10}>
         <Paper className={classes.paper} style={{ height: "40vh" }}>
-          item xs={12} sm={12} lg={10}
+          <ComposedChartSample data={data} />
         </Paper>
       </Grid>
       <Hidden mdDown>

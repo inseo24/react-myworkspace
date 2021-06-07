@@ -102,10 +102,10 @@ function App() {
     palette: {
       // type: "dark",
       primary: {
-        main: "#bb6bc9",
+        main: "#d7a8df",
       },
       secondary: {
-        main: "#ab47bc",
+        main: "#ce93d8",
       },
     },
   });
