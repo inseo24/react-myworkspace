@@ -21,7 +21,7 @@ const TodoItem = ({ todo }) => {
 
   const save = (id) => {
     const memo = inputRef.current.value;
-    dispatch({ type: "SAVE_TODO", payload: { id, memo } });
+    dispatch({ type: "MODIFY_TODO", payload: { id, memo } });
   };
 
   return (

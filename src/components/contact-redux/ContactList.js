@@ -2,7 +2,8 @@ import { TableHead, TableRow } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ContactItem from "./ContactItem";
 
 const ContactList = () => {
@@ -14,6 +15,11 @@ const ContactList = () => {
 
   // select: 현재 state를 조회하고 변경을 감지, state가 변경되면 컴포넌트를 업데이트함.
   const contactList = useSelector((state) => state.contact);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({ type: "FETCH_CONTACTLIST" });
+  }, [dispatch]);
 
   return (
     <div>

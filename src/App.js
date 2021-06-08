@@ -8,11 +8,6 @@ import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
 
 import { ThemeProvider } from "@material-ui/styles";
 
-// 리덕스 스토어 만들기1
-import { createStore } from "redux";
-// 리덕스 스토어 만들기4
-import { Provider } from "react-redux";
-
 // Core Components
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -36,15 +31,30 @@ import {
 } from "@material-ui/icons";
 
 import Home from "./components/home/Home";
+// 리덕스 스토어 만들기1
+import { createStore, applyMiddleware } from "redux"; // saga milldeware를 redux store에 적용하는데 사용
+// 리덕스 스토어 만들기4
+import { Provider } from "react-redux";
+import createSagaMiddleware from "redux-saga"; // saga middleware를 생성하는데 씀
 
 // ./redux :
 // redux.js , ./redux/index.js
 // 리덕스 스토어 만들기2
-import rootReducer from "./redux";
+import rootReducer from "./redux/reducers"; // 루트 리듀서
+import rootSaga from "./redux/sagas"; // 루트 사가
+
+// saga middleware 생성
+const sagaMiddleWare = createSagaMiddleware();
 
 // rootReduer로 redux store 생성
 // 리덕스 스토어 만들기3(index의 rootReducer 연결)
-const store = createStore(rootReducer);
+// sagamiddleware 적용
+const store = createStore(rootReducer, applyMiddleware(sagaMiddleWare));
+
+// saga middleware 실행
+// saga에서 중간에 캐치할 action들에 대해서 응답대기
+// 반복문이 돌고 있음. event-loop
+sagaMiddleWare.run(rootSaga);
 
 // 라우터에 로딩되는 컴포넌트는 컨테이너 컴포넌트
 const Todo = lazy(() => import("./components/todo-redux/Todo"));

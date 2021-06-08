@@ -25,7 +25,7 @@ const ContactItem = ({ contact }) => {
     const name = inputNameRef.current.value;
     const number = inputNumberRef.current.value;
     const mail = inputMailRef.current.value;
-    dispatch({ type: "SAVE_CONTACT", payload: { id, name, number, mail } });
+    dispatch({ type: "MODIFY_CONTACT", payload: { id, name, number, mail } });
   };
 
   const cancel = (id) => {

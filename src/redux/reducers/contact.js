@@ -6,18 +6,7 @@
 
 /* reducer는 이전 state와 action 객체를 받아서(이용해서) state를 변경 */
 
-const initialState = [
-  {
-    id: 1,
-    name: "최서인",
-    number: "010-1234-5678",
-    mail: "choi@naver.com",
-    comments: [
-      { id: 1, content: "커멘트입니다1." },
-      { id: 2, content: "커멘트입니다2." },
-    ],
-  },
-];
+const initialState = [];
 
 // 초기상태가 없으면 initialState를 적용
 
@@ -28,7 +17,7 @@ const contact = (state = initialState, action) => {
   // design pattern 중에서 command pattern을 응용함.
   switch (action.type) {
     // action = {type: 'ADD_CONTACT', payload: {id: 1, name: '', number:'', mail:''}}
-    case "ADD_CONTACT":
+    case "ADD_CONTACT_SUCCEEDED":
       // action.type에 따라서 state를 변경하여 return
       // 변동된 state를 리턴함.
       // return 변동된state;
@@ -49,12 +38,12 @@ const contact = (state = initialState, action) => {
       // 새로운 객체 생성 방식(ES2018)
 
       return [{ ...action.payload }, ...state];
-    case "REMOVE_CONTACT":
+    case "REMOVE_CONTACT_SUCCEEDED":
       // action = { type:'REMOVE_TODO', payload:1 }
       // 배열에서 요소삭제 -> 배열크기가 변동됨 == 특정 조건에 맞지않는 요소만 리턴됨 == filter
       return state.filter((contact) => contact.id !== action.payload);
 
-    case "SAVE_CONTACT":
+    case "MODIFY_CONTACT_SUCCEEDED":
       // 배열에서 요소변경 -> 배열크기는 변동 안 됨 == 특정 조건에 맞는 요소만 내용 변경 == map
       // action = { type:'SAVE_TODO', payload: {id:1, memo:"Redux 공부하기"} }
       return state.map((contact) =>
@@ -62,10 +51,12 @@ const contact = (state = initialState, action) => {
       );
 
     case "CANCEL_CONTACT":
-      // 배열요소 리턴 -> 배열크기 변동 안됨 == 특정 조건에 맞는 요소만 리턴 == map
       return state.map((contact) =>
         contact.id === action.payload.id ? { ...action.payload } : contact
       );
+
+    case "FETCH_CONTACTLIST_SUCCEEDED":
+      return [...action.payload];
 
     // default 케이스는 기존 상태를 반환
     default:

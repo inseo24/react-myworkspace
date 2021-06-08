@@ -16,7 +16,6 @@ const ContactForm = () => {
     dispatch({
       type: "ADD_CONTACT",
       payload: {
-        id: new Date().getTime(),
         name: inputNameRef.current.value,
         number: inputNumberRef.current.value,
         mail: inputMailRef.current.value,
