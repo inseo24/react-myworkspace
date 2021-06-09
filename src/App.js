@@ -177,7 +177,7 @@ function App() {
                     <MenuIcon />
                   </IconButton>
                   <Typography variant="h6" noWrap>
-                    MY WORKSPACE
+                    🍟🍟 Welcome! 🍟🍟
                   </Typography>
                 </Toolbar>
               </AppBar>

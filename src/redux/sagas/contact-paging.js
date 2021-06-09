@@ -1,4 +1,4 @@
-import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
+import { call, put, select, takeEvery, takeLatest } from "redux-saga/effects";
 
 import api from "../../api/contact";
 
@@ -10,9 +10,14 @@ function* addContact(action) {
     const result = yield call(api.add, action.payload);
     console.log(result);
 
+    const { size } = yield select((state) => state.contact);
+
+    const resultFetched = yield call(api.fetchPaging, 0, size);
+    console.log(resultFetched);
+
     yield put({
-      type: "ADD_CONTACT_SUCCEEDED",
-      payload: { id: result.data.id, ...action.payload },
+      type: "FETCH_CONTACTLIST_PAGING_SUCCEEDED",
+      payload: resultFetched.data,
     });
   } catch (e) {
     alert(e.message);
@@ -24,12 +29,18 @@ function* fetchContactListPaging(action) {
   console.log(action);
 
   try {
-    const resultFetched = yield call(api.fetchPaging, page, size);
+    const { page, size } = yield select((state) => state.contact);
+
+    const result = yield call(
+      api.fetchPaging,
+      action.payload ? action.payload.page : page,
+      action.payload ? action.payload.size : size
+    );
     console.log(result);
 
     yield put({
       type: "FETCH_CONTACTLIST_PAGING_SUCCEEDED",
-      payload: resultFetched.data,
+      payload: result.data,
     });
   } catch (e) {
     alert(e.message);
@@ -44,9 +55,12 @@ function* removeContact(action) {
     const result = yield call(api.remove, action.payload);
     console.log(result);
 
+    const { page, size } = yield select((state) => state.contact);
+    const resultFetched = yield call(api.fetchPaging, page, size);
+
     yield put({
-      type: "REMOVE_CONTACT_SUCCEEDED",
-      payload: action.payload,
+      type: "FETCH_CONTACTLIST_PAGING_SUCCEEDED",
+      payload: resultFetched.data,
     });
   } catch (e) {
     alert(e.message);

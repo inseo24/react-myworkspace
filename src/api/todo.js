@@ -20,6 +20,11 @@ const todoApi = {
   add: (data) => axios.post(`${process.env.REACT_APP_API_BASE}/todos`, data),
   // GET /todos
   fetch: () => axios.get(`${process.env.REACT_APP_API_BASE}/todos`),
+  // GET /todos/paging?page=0&size=10
+  fetchPaging: (page, size) =>
+    axios.get(
+      `${process.env.REACT_APP_API_BASE}/todos/paging?page=${page}&size=${size}`
+    ),
   // DELETE /todos/1
   remove: (id) => axios.delete(`${process.env.REACT_APP_API_BASE}/todos/${id}`),
   modify: (data) =>

@@ -59,12 +59,12 @@ const ContactForm = () => {
         style={{ width: "90%", marginRight: "0.5rem" }}
       />
       <Button
-        style={{ width: "10%" }}
+        style={{ width: "18%" }}
         variant="contained"
         color="secondary"
         onClick={add}
       >
-        입력
+        추가✨
       </Button>
     </div>
   );

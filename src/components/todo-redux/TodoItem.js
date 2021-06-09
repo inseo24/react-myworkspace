@@ -14,6 +14,12 @@ const TodoItem = ({ todo }) => {
   const history = useHistory(); // 코드를 이용하여 경로 이동 제어를 할 수 있음
   const dispatch = useDispatch();
   const inputRef = useRef();
+  // // 아무 state가 업데이트되도 현재 컴포넌트가 재갱신됨.
+  // const state = useSelector(state => state);
+  // // todo state가 업데이트되면 현재 컴포넌트가 재갱신됨.
+  // const data = useSelector(state => state.todo);
+  // // todo state가 업데이트되면 현재 컴포넌트가 재갱신됨
+  // const todo = useSelector(state => state.todo.filter(t => t.id === todo.id)[0]);
 
   const remove = (id) => {
     dispatch({ type: "REMOVE_TODO", payload: id });

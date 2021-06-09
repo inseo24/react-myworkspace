@@ -37,12 +37,12 @@ const TodoForm = () => {
         }}
       />
       <Button
-        style={{ width: "10%" }}
+        style={{ width: "15%" }}
         variant="contained"
         color="secondary"
         onClick={add}
       >
-        입력
+        추가✨
       </Button>
     </div>
   );

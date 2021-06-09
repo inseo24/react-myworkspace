@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ContactItem from "./ContactItem";
 
+import ContactPagination from "./ContactPagination";
+
 const ContactList = () => {
   // useSelector는 redux store의 state를 선택함
   // useSelector((state)) <- 안의 state는 전체state를 의미
@@ -14,16 +16,16 @@ const ContactList = () => {
   // const 하위state변수 = useSelector((전체state) =>  하위state)
 
   // select: 현재 state를 조회하고 변경을 감지, state가 변경되면 컴포넌트를 업데이트함.
-  const contactList = useSelector((state) => state.contact);
+  const data = useSelector((state) => state.contact);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({ type: "FETCH_CONTACTLIST" });
+    dispatch({ type: "FETCH_CONTACTLIST_PAGING" });
   }, [dispatch]);
 
   return (
-    <div>
-      <Table>
+    <div style={{ width: "100%", height: "60vh", overflowY: "auto" }}>
+      <Table stickyHeader aria-label="sticky table">
         <TableHead>
           <TableRow>
             <TableCell></TableCell>
@@ -34,11 +36,16 @@ const ContactList = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {contactList.map((contact) => (
+          {data.content.map((contact) => (
             <ContactItem key={contact.id} contact={contact} />
           ))}
         </TableBody>
       </Table>
+      <ContactPagination
+        totalElements={data.totalElements}
+        page={data.page}
+        size={data.size}
+      />
     </div>
   );
 };
