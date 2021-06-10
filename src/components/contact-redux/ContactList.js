@@ -1,4 +1,9 @@
-import { TableHead, TableRow } from "@material-ui/core";
+import {
+  makeStyles,
+  TableHead,
+  TableRow,
+  TableContainer,
+} from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -19,28 +24,37 @@ const ContactList = () => {
   const data = useSelector((state) => state.contact);
   const dispatch = useDispatch();
 
+  const useStyles = makeStyles({
+    container: {
+      maxHeight: 520,
+    },
+  });
+  const classes = useStyles();
+
   useEffect(() => {
     dispatch({ type: "FETCH_CONTACTLIST_PAGING" });
   }, [dispatch]);
 
   return (
-    <div style={{ width: "100%", height: "60vh", overflowY: "auto" }}>
-      <Table stickyHeader aria-label="sticky table">
-        <TableHead>
-          <TableRow>
-            <TableCell></TableCell>
-            <TableCell>이름</TableCell>
-            <TableCell>전화번호</TableCell>
-            <TableCell>메일</TableCell>
-            <TableCell></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.content.map((contact) => (
-            <ContactItem key={contact.id} contact={contact} />
-          ))}
-        </TableBody>
-      </Table>
+    <div>
+      <TableContainer className={classes.container}>
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead>
+            <TableRow>
+              <TableCell></TableCell>
+              <TableCell>이름</TableCell>
+              <TableCell>전화번호</TableCell>
+              <TableCell>메일</TableCell>
+              <TableCell></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.content.map((contact) => (
+              <ContactItem key={contact.id} contact={contact} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
       <ContactPagination
         totalElements={data.totalElements}
         page={data.page}
