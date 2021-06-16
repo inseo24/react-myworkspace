@@ -2,10 +2,21 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Hidden from "@material-ui/core/Hidden";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 
 import BarChartSample from "./BarChartSample";
 import LineChartSample from "./LineChartSample";
-import ComposedChartSample from "./ComposedChartSample";
+import ResponsiveTable from "./ResponsiveTableSample";
+
+import sourceSample from "./data/source";
+import sidoKorName from "./data/sidoKorName";
+import bardata from "./data/bardata";
+import linedata from "./data/linedata";
+import tabledata from "./data/tabledata";
+import { useEffect, useState } from "react";
+
+import api from "../../api/opendata";
 
 const useStyles = makeStyles((theme) => ({
   // 내부 페이퍼에 스타일을 지정
@@ -23,68 +34,88 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Home = () => {
-  const classes = useStyles();
+const transformSidoData = (source) => {
+  if (source.length === 0) return [];
 
-  const data = [
-    { sido: "seoul", pm10: 20, pm25: 10 },
-    { sido: "gyeonggi", pm10: 20, pm25: 10 },
-    { sido: "incheon", pm10: 14, pm25: 7 },
-    { sido: "gangwon", pm10: 33, pm25: 15 },
-    { sido: "sejong", pm10: 22, pm25: 6 },
-    { sido: "chungbuk", pm10: 34, pm25: 14 },
-    { sido: "chungnam", pm10: 13, pm25: 7 },
-    { sido: "daejeon", pm10: 51, pm25: 7 },
-    { sido: "gyeongbuk", pm10: 23, pm25: 10 },
-    { sido: "gyeongnam", pm10: 17, pm25: 9 },
-    { sido: "daegu", pm10: 21, pm25: 9 },
-    { sido: "ulsan", pm10: 17, pm25: 12 },
-    { sido: "busan", pm10: 19, pm25: 12 },
-    { sido: "jeonbuk", pm10: 9, pm25: 5 },
-    { sido: "jeonnam", pm10: 17, pm25: 9 },
-    { sido: "gwangju", pm10: 12, pm25: 7 },
-    { sido: "jeju", pm10: 10, pm25: 4 },
-  ];
+  // 가장 최근 데이터 (PM10, PM2.5)
+  const sourceData = source.slice(0, 2);
 
-  const sidoKorName = {
-    seoul: "서울",
-    gyeonggi: "경기",
-    incheon: "인천",
-    gangwon: "강원",
-    sejong: "세종",
-    chungbuk: "충북",
-    chungnam: "충남",
-    daejeon: "대전",
-    gyeongbuk: "경북",
-    gyeongnam: "경남",
-    daegu: "대구",
-    ulsan: "울산",
-    busan: "부산",
-    jeonbuk: "전북",
-    jeonnam: "전남",
-    gwangju: "광주",
-    jeju: "제주",
-  };
-
-  for (let elm of data) {
-    elm.sido = sidoKorName[elm.sido];
+  const transData = [];
+  for (let name in sidoKorName) {
+    const item = {
+      sido: sidoKorName[name],
+      pm10: parseInt(sourceData[0][name]),
+      pm25: parseInt(sourceData[1][name]),
+    };
+    transData.push(item);
   }
 
-  // 서울 중구의 시간대별 변화
-  const locationCurrentData = [
-    { dataTime: "05-27:01", pm10: 46, pm25: 15 },
-    { dataTime: "05-27:02", pm10: 46, pm25: 18 },
-    { dataTime: "05-27:03", pm10: 43, pm25: 16 },
-    { dataTime: "05-27:04", pm10: 37, pm25: 12 },
-    { dataTime: "05-27:05", pm10: 39, pm25: 13 },
-    { dataTime: "05-27:06", pm10: 37, pm25: 14 },
-    { dataTime: "05-27:07", pm10: 38, pm25: 14 },
-    { dataTime: "05-27:08", pm10: 42, pm25: 16 },
-    { dataTime: "05-27:09", pm10: 38, pm25: 15 },
-    { dataTime: "05-27:10", pm10: 22, pm25: 9 },
-    { dataTime: "05-27:11", pm10: 17, pm25: 8 },
-    { dataTime: "05-27:12", pm10: 17, pm25: 10 },
-  ];
+  return transData;
+};
+
+const transformLocationData = (source, sido) => {
+  if (source.length === 0) return [];
+
+  const transData = [];
+  let item = {};
+  // for-in 문 동일한데, index를 사용하고 싶을 때 쓴다
+  source.forEach((record, index) => {
+    if (index % 2 === 0) {
+      // PM10
+      item.dataTime = record.dataTime.substr(11, 5);
+      item.pm10 = parseInt(record[sido]);
+    } else {
+      // PM2.5
+      item.pm25 = parseInt(record[sido]);
+      transData.unshift(item);
+      item = {};
+    }
+  });
+
+  return transData;
+};
+
+const transformSidoTableData = (source) => {
+  if (source.length === 0) return [];
+  return source.map((item) => {
+    let newItem = { 시간: item.dataTime.substr(5, 11), 구분: item.itemCode };
+    for (let name in sidoKorName) {
+      let val = item[name];
+      newItem[sidoKorName[name]] = parseInt(val);
+    }
+
+    return newItem; // map함수 안에서 반환되는 객체
+  });
+};
+
+const Home = () => {
+  const classes = useStyles();
+  const [sido, setSido] = useState("seoul");
+  const [source, setSource] = useState([]);
+
+  // 백엔드에서 받아온 데이터를 세팅함
+
+  // useEffect(()=>{}, [])
+  // [변수명] -> 변수의 값이 바뀔 때 마다 함수가 호출됨
+  // [] -> 컴포넌트가 처음 마운트될 때만 호출됨
+
+  useEffect(() => {
+    // async-await, ES8, ES2017
+    const getData = async () => {
+      // await 키워드: promise 처리가 완료될 때까지 대기
+      // async 함수 안에서만 쓸 수가 있음.
+      // -> 네트워크 호출이 끝날때까지 대기하고 결과값을 반환함
+      const result = await api.fetchDustHourly();
+      setSource(result.data);
+    };
+
+    getData();
+
+    // Promise chain, ES6, ES2015
+    // api.fetchDustHourly().then(result => {
+    //   setSource(result.data);
+    // });
+  }, []);
 
   return (
     // Grid 컨테이너 선언
@@ -97,13 +128,29 @@ const Home = () => {
         <Grid item lg={1} />
       </Hidden>
       <Grid item xs={12} sm={7} lg={6}>
-        <Paper className={classes.paper} style={{ height: "20vh" }}>
-          <BarChartSample data={data} />
+        <Paper className={classes.paper} style={{ height: "25vh" }}>
+          <h3>시도별 미세먼지 현재 현황</h3>
+          <BarChartSample data={transformSidoData(source)} />
         </Paper>
       </Grid>
       <Grid item xs={12} sm={5} lg={4}>
-        <Paper className={classes.paper} style={{ height: "20vh" }}>
-          <LineChartSample data={locationCurrentData} />
+        <Paper className={classes.paper} style={{ height: "25vh" }}>
+          <h3>
+            <Select
+              value={sido}
+              onChange={(event) => {
+                setSido(event.target.value);
+              }}
+            >
+              {Object.keys(sidoKorName).map((sido) => (
+                <MenuItem key={`menu-${sido}`} value={sido}>
+                  {sidoKorName[sido]}
+                </MenuItem>
+              ))}
+            </Select>
+            {"\u00A0"} 미세먼지 현황
+          </h3>
+          <LineChartSample data={transformLocationData(source, sido)} />
         </Paper>
       </Grid>
       <Hidden mdDown>
@@ -113,8 +160,9 @@ const Home = () => {
         <Grid item lg={1} />
       </Hidden>
       <Grid item xs={12} sm={12} lg={10}>
-        <Paper className={classes.paper} style={{ height: "40vh" }}>
-          <ComposedChartSample data={data} />
+        <Paper className={classes.paper}>
+          <h3>시도별 미세먼지 이력</h3>
+          <ResponsiveTable data={transformSidoTableData(source.slice(0, 8))} />
         </Paper>
       </Grid>
       <Hidden mdDown>

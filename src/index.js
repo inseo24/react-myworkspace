@@ -17,11 +17,3 @@ ReactDOM.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
-
-// 커멘트 추가
-// 커멘트 다시 추가
-// 커멘트 다시 다시 추가
-// 커멘트 다시 다시 다시 추가
-// 커멘트 다시 다시 다시 다시 추가
-// 커멘트 다시 다시 다시 다시 다시 추가
-// 커멘트 추가

@@ -34,6 +34,7 @@ const Contact = () => {
         <Hidden xsDown>
           <Grid item sm={1} md={2} lg={3} />
         </Hidden>
+
         <Grid item xs={12} sm={10} md={8} lg={10}>
           <Paper className={classes.paper}>
             <Typography variant="h5">Contact</Typography>
