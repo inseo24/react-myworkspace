@@ -5,7 +5,7 @@ import { Suspense, lazy, useState } from "react";
 // https://material-ui.com/customization/color/
 // https://material-ui.com/styles/api/#themeprovider
 import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
-
+import WbSunnyIcon from "@material-ui/icons/WbSunny";
 import { ThemeProvider } from "@material-ui/styles";
 
 // Core Components
@@ -31,6 +31,8 @@ import {
 } from "@material-ui/icons";
 
 import Home from "./components/home/Home";
+import Weather from "./components/opendata/Weather";
+
 // 리덕스 스토어 만들기1
 import { createStore, applyMiddleware } from "redux"; // saga milldeware를 redux store에 적용하는데 사용
 // 리덕스 스토어 만들기4
@@ -110,12 +112,11 @@ function App() {
   // https://material-ui.com/customization/color/
   const theme = createMuiTheme({
     palette: {
-      // type: "dark",
       primary: {
-        main: "#d7a8df",
+        main: "#ffccbc",
       },
       secondary: {
-        main: "#ce93d8",
+        main: "#ffab91",
       },
     },
   });
@@ -134,6 +135,14 @@ function App() {
               <HomeIcon />
             </ListItemIcon>
             <ListItemText>Home</ListItemText>
+          </ListItem>
+        </Link>
+        <Link to="/opendata" className={classes.link}>
+          <ListItem button>
+            <ListItemIcon>
+              <WbSunnyIcon />
+            </ListItemIcon>
+            <ListItemText>Weather</ListItemText>
           </ListItem>
         </Link>
         <Link to="/todo" className={classes.link}>
@@ -218,6 +227,7 @@ function App() {
                   <Route path="/todo/:id" component={TodoDetail}></Route>
                   <Route path="/contacts" component={Contact} exact></Route>
                   <Route path="/contacts/:id" component={ContactDetail}></Route>
+                  <Route path="/opendata" component={Weather}></Route>
                 </Switch>
               </Suspense>
             </main>
