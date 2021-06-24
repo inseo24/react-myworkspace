@@ -29,8 +29,7 @@ const mapdata = [
   {
     latitude: 35.1595,
     longitude: 126.8526,
-    imageURL:
-      "https://www.amcharts.com/lib/images/weather/animated/day.svg",
+    imageURL: "https://www.amcharts.com/lib/images/weather/animated/day.svg",
     width: 32,
     height: 32,
     label: "광주",
@@ -38,8 +37,7 @@ const mapdata = [
   {
     latitude: 37.5665,
     longitude: 126.978,
-    imageURL:
-      "https://www.amcharts.com/lib/images/weather/animated/day.svg",
+    imageURL: "https://www.amcharts.com/lib/images/weather/animated/day.svg",
     width: 32,
     height: 32,
     label: "서울",
@@ -107,5 +105,5 @@ const mapdata = [
     height: 32,
     label: "목포",
   },
-
+];
 export default mapdata;

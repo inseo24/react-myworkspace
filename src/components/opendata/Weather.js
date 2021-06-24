@@ -3,8 +3,8 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Hidden from "@material-ui/core/Hidden";
 
-import LineTable from "./assets/LineTable";
-import MapTable from "./assets/Map";
+import MapChart from "./assets/Map";
+import ColumnChart from "./assets/ColumnChart";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -34,13 +34,13 @@ const Weather = () => {
       <Grid item xs={12} sm={6} lg={5}>
         <Paper className={classes.paper} style={{ height: "65vh" }}>
           <h3>지역별 평균 기온</h3>
-          <MapTable />
+          <MapChart />
         </Paper>
       </Grid>
       <Grid item xs={12} sm={6} lg={5}>
         <Paper className={classes.paper} style={{ height: "65vh" }}>
-          <h3>지역별 날씨</h3>
-          <LineTable />
+          <h3>지역별 현재 날씨</h3>
+          <ColumnChart />
         </Paper>
       </Grid>
       <Hidden mdDown>
