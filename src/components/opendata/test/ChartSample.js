@@ -1,16 +1,9 @@
-/* Imports */
 import React, { Component } from "react";
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
-import am4themes_dataviz from "@amcharts/amcharts4/themes/dataviz";
 
-/* Chart code */
-// Themes begin
-am4core.useTheme(am4themes_dataviz);
-am4core.useTheme(am4themes_animated);
-
-class ColumnChart extends Component {
+class LineChart extends Component {
   componentDidMount() {
     /* Chart code */
     // Themes begin
@@ -67,4 +60,4 @@ class ColumnChart extends Component {
   }
 }
 
-export default ColumnChart;
+export default LineChart;

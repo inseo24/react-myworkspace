@@ -10,8 +10,6 @@ import ColumnChart from "./assets/ColumnChart";
 import areaCode from "./assets/data/areaCode";
 import apiNow from "../../api/weathernow";
 
-import columndata from "./assets/data/columndata";
-
 const transformNowData = (sourceNow) => {
   if (sourceNow.length === 0) return [];
 
@@ -21,7 +19,7 @@ const transformNowData = (sourceNow) => {
       obsrValue,
     }));
 
-  console.log("--category: T1H--");
+  console.log("--현재 날씨 데이터만 뽑기--");
   console.log(nowWeatherData);
 
   const transformLocationData = nowWeatherData.map((el) => {
@@ -33,7 +31,7 @@ const transformNowData = (sourceNow) => {
     }
     return el;
   });
-  console.log("--areaCode -> areaName--");
+  console.log("--지역명 넣기--");
   console.log(transformLocationData);
 
   const nowWeather = transformLocationData.map(({ ny, obsrValue }) => {
@@ -43,14 +41,11 @@ const transformNowData = (sourceNow) => {
     };
   });
 
-  console.log("-- 현재 날씨 정보 --");
+  console.log("--컬럼 데이터 완성--");
   console.log(nowWeather);
 
   return nowWeather;
 };
-
-console.log("--컬럼 더미 데이터--");
-console.log(columndata);
 
 const useStyles = makeStyles((theme) => ({
   paper: {

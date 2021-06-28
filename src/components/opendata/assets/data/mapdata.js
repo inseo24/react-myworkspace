@@ -6,7 +6,7 @@ const mapdata = [
       "https://www.amcharts.com/lib/images/weather/animated/rainy-1.svg",
     width: 32,
     height: 32,
-    label: "부산",
+    지역: "부산",
   },
   {
     latitude: 35.8714,
@@ -15,7 +15,7 @@ const mapdata = [
       "https://www.amcharts.com/lib/images/weather/animated/thunder.svg",
     width: 32,
     height: 32,
-    label: "대구",
+    지역: "대구",
   },
   {
     latitude: 36.3504,
@@ -24,7 +24,7 @@ const mapdata = [
       "https://www.amcharts.com/lib/images/weather/animated/cloudy-day-1.svg",
     width: 32,
     height: 32,
-    label: "대전",
+    지역: "대전",
   },
   {
     latitude: 35.1595,
@@ -32,7 +32,7 @@ const mapdata = [
     imageURL: "https://www.amcharts.com/lib/images/weather/animated/day.svg",
     width: 32,
     height: 32,
-    label: "광주",
+    지역: "광주",
   },
   {
     latitude: 37.5665,
@@ -40,7 +40,7 @@ const mapdata = [
     imageURL: "https://www.amcharts.com/lib/images/weather/animated/day.svg",
     width: 32,
     height: 32,
-    label: "서울",
+    지역: "서울",
   },
   {
     latitude: 35.5384,
@@ -49,7 +49,7 @@ const mapdata = [
       "https://www.amcharts.com/lib/images/weather/animated/rainy-1.svg",
     width: 32,
     height: 32,
-    label: "울산",
+    지역: "울산",
   },
   {
     latitude: 33.4996,
@@ -58,7 +58,7 @@ const mapdata = [
       "https://www.amcharts.com/lib/images/weather/animated/rainy-1.svg",
     width: 32,
     height: 32,
-    label: "제주",
+    지역: "제주",
   },
   {
     latitude: 35.8242,
@@ -67,7 +67,7 @@ const mapdata = [
       "https://www.amcharts.com/lib/images/weather/animated/rainy-1.svg",
     width: 32,
     height: 32,
-    label: "전주",
+    지역: "전주",
   },
   {
     latitude: 37.7519,
@@ -76,7 +76,7 @@ const mapdata = [
       "https://www.amcharts.com/lib/images/weather/animated/rainy-1.svg",
     width: 32,
     height: 32,
-    label: "강릉",
+    지역: "강릉",
   },
   {
     latitude: 36.5684,
@@ -85,7 +85,7 @@ const mapdata = [
       "https://www.amcharts.com/lib/images/weather/animated/rainy-1.svg",
     width: 32,
     height: 32,
-    label: "안동",
+    지역: "안동",
   },
   {
     latitude: 37.8813,
@@ -94,7 +94,7 @@ const mapdata = [
       "https://www.amcharts.com/lib/images/weather/animated/rainy-1.svg",
     width: 32,
     height: 32,
-    label: "춘천",
+    지역: "춘천",
   },
   {
     latitude: 34.8118,
@@ -103,7 +103,7 @@ const mapdata = [
       "https://www.amcharts.com/lib/images/weather/animated/rainy-1.svg",
     width: 32,
     height: 32,
-    label: "목포",
+    지역: "목포",
   },
 ];
 export default mapdata;

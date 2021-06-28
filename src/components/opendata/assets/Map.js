@@ -12,7 +12,7 @@ am4core.useTheme(am4themes_dataviz);
 am4core.useTheme(am4themes_animated);
 // Themes end
 
-function MapChart(props) {
+function MapChart() {
   const chart = useRef(null);
 
   useLayoutEffect(() => {
@@ -50,12 +50,16 @@ function MapChart(props) {
     image.verticalCenter = "middle";
 
     let label = imageTemplate.createChild(am4core.Label);
-    label.text = "{label}";
+    label.text = "{지역}";
     label.horizontalCenter = "middle";
     label.verticalCenter = "top";
     label.dy = 20;
 
     imageSeries.data = mapdata;
+
+    console.log("--맵 데이터--");
+    console.log(mapdata);
+
     chart.current = x;
 
     return () => {

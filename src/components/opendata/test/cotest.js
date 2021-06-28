@@ -1,23 +1,38 @@
 /* Imports */
-import React, { Component } from "react";
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import am4themes_dataviz from "@amcharts/amcharts4/themes/dataviz";
+import React, { Component } from "react";
 
-/* Chart code */
-// Themes begin
+import { AmchartsReact } from "amchart4-react";
+
 am4core.useTheme(am4themes_dataviz);
 am4core.useTheme(am4themes_animated);
 
-class ColumnChart extends Component {
-  componentDidMount() {
-    /* Chart code */
-    // Themes begin
-    am4core.useTheme(am4themes_animated);
-    // Themes end
+class TestChart extends Component {
+  state = {
+    chart: null,
+    categoryAxis: null,
+  };
 
-    let chart = am4core.create("chartdiv", am4charts.XYChart);
+  componentDidMount() {
+    const chart = am4core.create("testchart", am4charts.XYChart);
+
+    this.createChart(chart);
+
+    this.setState(() => ({ chart }));
+  }
+
+  componentWillUnmount() {
+    if (this.chart) {
+      this.chart.dispose();
+    }
+  }
+
+  createChart = (chart) => {
+    chart.data = this.props.data;
+
     chart.padding(40, 40, 40, 40);
 
     let categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
@@ -26,6 +41,8 @@ class ColumnChart extends Component {
     categoryAxis.renderer.minGridDistance = 1;
     categoryAxis.renderer.inversed = true;
     categoryAxis.renderer.grid.template.disabled = true;
+
+    this.setState(() => ({ categoryAxis }));
 
     let valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
     valueAxis.min = 0;
@@ -51,20 +68,22 @@ class ColumnChart extends Component {
     });
 
     categoryAxis.sortBySeries = series;
-    chart.data = this.props.data;
-
-    this.chart = chart;
-  }
-
-  componentWillUnmount() {
-    if (this.chart) {
-      this.chart.dispose();
-    }
-  }
+  };
 
   render() {
-    return <div id="chartdiv" style={{ width: "100%", height: "500px" }}></div>;
+    return (
+      <div>
+        <div id="testchart" style={{ width: "100%", height: "500px" }} />
+        {this.state.chart ? (
+          <AmchartsReact
+            chart={this.state.chart}
+            categoryAxis={this.state.categoryAxis}
+            color="black"
+          />
+        ) : null}
+      </div>
+    );
   }
 }
 
-export default ColumnChart;
+export default TestChart;
