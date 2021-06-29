@@ -6,10 +6,10 @@ import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
 class ColumnChart extends Component {
   componentDidMount() {
+    /* Chart code */
     am4core.useTheme(am4themes_animated);
-    let chart = am4core.create("chartdiv", am4charts.XYChart);
-    chart.paddingRight = this.props.paddingRight;
 
+    let chart = am4core.create("chartdiv", am4charts.XYChart);
     chart.padding(40, 40, 40, 40);
 
     let categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
@@ -37,22 +37,15 @@ class ColumnChart extends Component {
       "{values.valueX.workingValue.formatNumber('#.0as')}";
     labelBullet.locationX = 1;
 
+    // as by default columns of the same series are of the same color, we add adapter which takes colors from chart.colors color set
     series.columns.template.adapter.add("fill", function (fill, target) {
       return chart.colors.getIndex(target.dataItem.index);
     });
-
-    categoryAxis.sortBySeries = series;
     chart.data = this.props.data;
 
+    categoryAxis.sortBySeries = series;
+
     this.chart = chart;
-  }
-
-  componentDidUpdate(oldProps) {
-    if (oldProps.paddingRight !== this.props.paddingRight) {
-      this.chart.paddingRight = this.props.paddingRight;
-    }
-
-    this.chart.data = this.props.data;
   }
 
   componentWillUnmount() {

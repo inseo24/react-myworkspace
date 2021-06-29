@@ -2,27 +2,29 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Hidden from "@material-ui/core/Hidden";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import MapChart from "./assets/Map";
+import MapChart from "./assets/MapChart";
 import ColumnChart from "./assets/ColumnChart";
 
 import areaCode from "./assets/data/areaCode";
 import apiNow from "../../api/weathernow";
+import apiMap from "../../api/weatherMap";
 
-import columndata from "./assets/data/columndata";
+import mapdata from "./assets/data/mapdata";
+console.log("--map dummy data--");
+console.log(mapdata);
 
 const transformNowData = (sourceNow) => {
   if (sourceNow.length === 0) return [];
 
-  const nowWeatherData = sourceNow
-    .filter((item) => item.category === "T1H")
-    .filter(({ obsrValue }) => ({
-      obsrValue,
-    }));
+  const nowWeatherData = sourceNow.filter((item) => item.category === "T1H");
+  // .filter(({ obsrValue }) => ({
+  //   obsrValue,
+  // }));
 
-  console.log("--category: T1H--");
-  console.log(nowWeatherData);
+  // console.log("--category: T1H--");
+  // console.log(nowWeatherData);
 
   const transformLocationData = nowWeatherData.map((el) => {
     if (areaCode[el.ny]) {
@@ -33,8 +35,8 @@ const transformNowData = (sourceNow) => {
     }
     return el;
   });
-  console.log("--areaCode -> areaName--");
-  console.log(transformLocationData);
+  // console.log("--areaCode -> areaName--");
+  // console.log(transformLocationData);
 
   const nowWeather = transformLocationData.map(({ ny, obsrValue }) => {
     return {
@@ -43,14 +45,30 @@ const transformNowData = (sourceNow) => {
     };
   });
 
-  console.log("-- 현재 날씨 정보 --");
-  console.log(nowWeather);
+  // console.log("-- 현재 날씨 정보 --");
+  // console.log(nowWeather);
+  // const data = [];
+  // console.log("--데이터 확인--");
+  // console.log(data);
+
+  // for (let i = 0; i < nowWeather.length; i++) {
+  //   data.push(nowWeather[i]);
+  // }
 
   return nowWeather;
 };
 
-console.log("--컬럼 더미 데이터--");
-console.log(columndata);
+const transformMapData = (sourceNow) => {
+  if (sourceNow.length === 0) return [];
+  //  && item.category === "SKY"
+
+  const WeatherData = sourceNow
+    .filter((item) => item.category.toString().includes("PTY"))
+    .filter(({ fcstTime }) => fcstTime === "1500");
+
+  console.log("--category: PTY && fcstTime: 1500 --");
+  console.log(WeatherData);
+};
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -71,8 +89,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Weather = () => {
   const classes = useStyles();
-
   const [sourceNow, setSourceNow] = useState([]);
+  const [sourceMap, setSourceMap] = useState([]);
 
   useEffect(() => {
     const getNowData = async () => {
@@ -80,6 +98,14 @@ const Weather = () => {
       setSourceNow(result.data);
     };
     getNowData();
+  }, []);
+
+  useEffect(() => {
+    const getMapData = async () => {
+      const result = await apiMap.fetchWeatherMapData();
+      setSourceMap(result.data);
+    };
+    getMapData();
   }, []);
 
   return (
@@ -90,7 +116,7 @@ const Weather = () => {
       <Grid item xs={12} sm={6} lg={5}>
         <Paper className={classes.paper} style={{ height: "65vh" }}>
           <h3>지역별 평균 기온</h3>
-          <MapChart />
+          <MapChart data={transformMapData(sourceMap)} />
         </Paper>
       </Grid>
       <Grid item xs={12} sm={6} lg={5}>

@@ -7,10 +7,8 @@ import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import mapdata from "./data/mapdata";
 import { useRef, useLayoutEffect } from "react";
 
-// Themes begin
 am4core.useTheme(am4themes_dataviz);
 am4core.useTheme(am4themes_animated);
-// Themes end
 
 function MapChart() {
   const chart = useRef(null);
