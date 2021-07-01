@@ -8,6 +8,11 @@ import MapChart from "./assets/MapChart";
 import ColumnChart from "./assets/ColumnChart";
 
 import areaCode from "./assets/data/areaCode";
+import skyImage from "./assets/data/skyImage";
+import ptyImage from "./assets/data/ptyImage";
+import latitude from "./assets/data/latitude";
+import longitude from "./assets/data/longitude";
+
 import apiNow from "../../api/weathernow";
 import apiMap from "../../api/weatherMap";
 
@@ -60,14 +65,122 @@ const transformNowData = (sourceNow) => {
 
 const transformMapData = (sourceNow) => {
   if (sourceNow.length === 0) return [];
-  //  && item.category === "SKY"
 
-  const WeatherData = sourceNow
-    .filter((item) => item.category.toString().includes("PTY"))
-    .filter(({ fcstTime }) => fcstTime === "1500");
+  const WeatherData = sourceNow.filter(
+    (item) => ["PTY", "SKY"].includes(item.category) && item.fcstTime === "1500"
+  );
 
-  console.log("--category: PTY && fcstTime: 1500 --");
-  console.log(WeatherData);
+  // console.log("--category: PTY, SKY && fcstTime: 1500 --");
+  // console.log(WeatherData);
+
+  const categoryPty = WeatherData.filter(
+    (item) => item.category === "PTY" && item.fcstValue !== "0"
+  );
+  // console.log("-- category : PTY && fcstValue != 0 ");
+  // console.log(categoryPty);
+
+  const categorySky = Object.values(
+    WeatherData.reduce((array, item) => {
+      array[item.ny] = { ...(array[item.ny] || {}), [item.category]: item };
+      return array;
+    }, {})
+  )
+    .filter(({ PTY }) => PTY.fcstValue === "0")
+    .map(({ SKY }) => SKY);
+
+  // console.log("--category: SKY(category: PTY && fcstValue === 0) --");
+  // console.log(categorySky);
+
+  const transformPtyImage = categoryPty.map((el) => {
+    if (ptyImage[el.fcstValue]) {
+      return {
+        ...el,
+        fcstValue: ptyImage[el.fcstValue],
+      };
+    }
+    return el;
+  });
+
+  // console.log("--PTY imageURL 넣기--");
+  // console.log(transformPtyImage);
+
+  const transformSkyImage = categorySky.map((el) => {
+    if (skyImage[el.fcstValue]) {
+      return {
+        ...el,
+        fcstValue: skyImage[el.fcstValue],
+      };
+    }
+    return el;
+  });
+
+  // console.log("--SKY imageURL 넣기--");
+  // console.log(transformSkyImage);
+
+  const mergeCategory = [...transformPtyImage, ...transformSkyImage];
+
+  // console.log("-- merge array-- ");
+  // console.log(mergeCategory);
+
+  const addLongitude = mergeCategory.map((item) => {
+    item.longitude = item.ny;
+    item.latitude = item.ny;
+    return item;
+  });
+
+  const transLongitude = addLongitude.map((el) => {
+    if (longitude[el.longitude]) {
+      return {
+        ...el,
+        longitude: longitude[el.longitude],
+      };
+    }
+    return el;
+  });
+
+  const transLatitude = transLongitude.map((el) => {
+    if (latitude[el.latitude]) {
+      return {
+        ...el,
+        latitude: latitude[el.latitude],
+      };
+    }
+    return el;
+  });
+
+  // console.log("--add longitude, latitude--");
+  // console.log(transLatitude);
+
+  const transformLocationData = transLatitude.map((el) => {
+    if (areaCode[el.ny]) {
+      return {
+        ...el,
+        ny: areaCode[el.ny],
+      };
+    }
+    return el;
+  });
+
+  // console.log("--areaCode -> areaName--");
+  // console.log(transformLocationData);
+
+  const mapData = transformLocationData.map(
+    ({ ny, fcstValue, longitude, latitude }) => {
+      return {
+        latitude: latitude,
+        longitude: longitude,
+        지역: ny,
+        imageURL: fcstValue,
+        width: 32,
+        height: 32,
+      };
+    }
+  );
+
+  console.log("-- mapData :  add width, height --");
+  console.log(mapData);
+
+  return mapData;
 };
 
 const useStyles = makeStyles((theme) => ({

@@ -12,6 +12,7 @@ class MapChart extends Component {
     am4core.useTheme(am4themes_animated);
 
     let chart = am4core.create("mapdiv", am4maps.MapChart);
+    chart.paddingRight = this.props.paddingRight;
 
     // Set map definition
     chart.geodata = am4geodata_worldHigh;
@@ -52,6 +53,7 @@ class MapChart extends Component {
 
     imageSeries.data = this.props.data;
 
+    this.imageSeries = imageSeries;
     this.chart = chart;
   }
 
@@ -59,8 +61,7 @@ class MapChart extends Component {
     if (oldProps.paddingRight !== this.props.paddingRight) {
       this.chart.paddingRight = this.props.paddingRight;
     }
-
-    this.imageSeries = this.props.data;
+    this.imageSeries.data = this.props.data;
   }
 
   componentWillUnmount() {

@@ -42,6 +42,7 @@ class ColumnChart extends Component {
     });
 
     categoryAxis.sortBySeries = series;
+
     chart.data = this.props.data;
 
     this.chart = chart;
