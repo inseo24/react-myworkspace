@@ -45,6 +45,7 @@ const ContactList = () => {
               <TableCell>이름</TableCell>
               <TableCell>전화번호</TableCell>
               <TableCell>메일</TableCell>
+              <TableCell>메모</TableCell>
               <TableCell></TableCell>
             </TableRow>
           </TableHead>

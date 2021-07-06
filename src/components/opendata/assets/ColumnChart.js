@@ -21,7 +21,6 @@ class ColumnChart extends Component {
 
     let valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
     valueAxis.min = 0;
-
     let series = chart.series.push(new am4charts.ColumnSeries());
     series.dataFields.categoryY = "지역";
     series.dataFields.valueX = "기온";

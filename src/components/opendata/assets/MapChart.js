@@ -47,13 +47,16 @@ class MapChart extends Component {
 
     let label = imageTemplate.createChild(am4core.Label);
     label.text = "{지역}";
-    label.horizontalCenter = "middle";
-    label.verticalCenter = "top";
-    label.dy = 20;
+
+    label.horizontalCenter = "left";
+    label.verticalCenter = "middle";
+    label.dy = 25;
+    label.fontSize = "15px";
+    label.fontWeight = "300";
 
     imageSeries.data = this.props.data;
-
     this.imageSeries = imageSeries;
+
     this.chart = chart;
   }
 
@@ -61,6 +64,7 @@ class MapChart extends Component {
     if (oldProps.paddingRight !== this.props.paddingRight) {
       this.chart.paddingRight = this.props.paddingRight;
     }
+
     this.imageSeries.data = this.props.data;
   }
 

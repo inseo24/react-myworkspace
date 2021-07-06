@@ -16,6 +16,7 @@ const ContactItem = ({ contact }) => {
   const inputNameRef = useRef();
   const inputNumberRef = useRef();
   const inputMailRef = useRef();
+  const inputMemoRef = useRef();
 
   const remove = (id) => {
     dispatch({ type: "REMOVE_CONTACT", payload: id });
@@ -25,7 +26,12 @@ const ContactItem = ({ contact }) => {
     const name = inputNameRef.current.value;
     const number = inputNumberRef.current.value;
     const mail = inputMailRef.current.value;
-    dispatch({ type: "MODIFY_CONTACT", payload: { id, name, number, mail } });
+    const memo = inputMemoRef.current.value;
+
+    dispatch({
+      type: "MODIFY_CONTACT",
+      payload: { id, name, number, mail, memo },
+    });
   };
 
   const cancel = (id) => {
@@ -55,6 +61,7 @@ const ContactItem = ({ contact }) => {
       )}
       {!isEdit && <TableCell>{contact.number}</TableCell>}
       {!isEdit && <TableCell>{contact.mail}</TableCell>}
+      {!isEdit && <TableCell>{contact.memo}</TableCell>}
       {!isEdit && (
         <TableCell>
           <Button
@@ -90,6 +97,15 @@ const ContactItem = ({ contact }) => {
             type="text"
             defaultValue={contact.mail}
             inputRef={inputMailRef}
+          />
+        </TableCell>
+      )}
+      {isEdit && (
+        <TableCell>
+          <TextField
+            type="text"
+            defaultValue={contact.memo}
+            inputRef={inputMemoRef}
           />
         </TableCell>
       )}

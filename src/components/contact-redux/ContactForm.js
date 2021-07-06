@@ -7,6 +7,8 @@ const ContactForm = () => {
   const inputNameRef = useRef();
   const inputNumberRef = useRef();
   const inputMailRef = useRef();
+  const inputMemoRef = useRef();
+
   // store에 dispatch할 함수를 생성
   const dispatch = useDispatch();
 
@@ -19,11 +21,13 @@ const ContactForm = () => {
         name: inputNameRef.current.value,
         number: inputNumberRef.current.value,
         mail: inputMailRef.current.value,
+        memo: inputMemoRef.current.value,
       },
     });
     inputNameRef.current.value = "";
     inputNumberRef.current.value = "";
     inputMailRef.current.value = "";
+    inputMemoRef.current.value = "";
   };
 
   const change = (event) => {
@@ -58,13 +62,21 @@ const ContactForm = () => {
         size="small"
         style={{ width: "90%", marginRight: "0.5rem" }}
       />
+      <TextField
+        variant="outlined"
+        inputRef={inputMemoRef}
+        label="메모"
+        onKeyPress={change}
+        size="small"
+        style={{ width: "90%", marginRight: "0.5rem" }}
+      />
       <Button
         style={{ width: "18%" }}
         variant="contained"
         color="secondary"
         onClick={add}
       >
-        추가✨
+        추가
       </Button>
     </div>
   );

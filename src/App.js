@@ -28,6 +28,8 @@ import {
   PlaylistAddCheck,
   TableChart,
   Menu as MenuIcon,
+  Waves,
+  LocalPhone,
 } from "@material-ui/icons";
 
 import Home from "./components/home/Home";
@@ -132,9 +134,9 @@ function App() {
         <Link to="/" className={classes.link}>
           <ListItem button>
             <ListItemIcon>
-              <HomeIcon />
+              <Waves />
             </ListItemIcon>
-            <ListItemText>Home</ListItemText>
+            <ListItemText>미세먼지</ListItemText>
           </ListItem>
         </Link>
         <Link to="/opendata" className={classes.link}>
@@ -142,23 +144,23 @@ function App() {
             <ListItemIcon>
               <WbSunnyIcon />
             </ListItemIcon>
-            <ListItemText>Weather</ListItemText>
+            <ListItemText>날씨</ListItemText>
           </ListItem>
         </Link>
-        <Link to="/todo" className={classes.link}>
+        {/* <Link to="/todo" className={classes.link}>
           <ListItem button>
             <ListItemIcon>
               <PlaylistAddCheck />
             </ListItemIcon>
             <ListItemText>To-Do</ListItemText>
           </ListItem>
-        </Link>
+        </Link> */}
         <Link to="/contacts" className={classes.link}>
           <ListItem button>
             <ListItemIcon>
-              <TableChart />
+              <LocalPhone />
             </ListItemIcon>
-            <ListItemText>Contacts</ListItemText>
+            <ListItemText>Contact me</ListItemText>
           </ListItem>
         </Link>
       </List>
@@ -186,7 +188,7 @@ function App() {
                     <MenuIcon />
                   </IconButton>
                   <Typography variant="h6" noWrap>
-                    🍟🍟 Welcome! 🍟🍟
+                    Weather Now ⛅💧🌂🌈🌡
                   </Typography>
                 </Toolbar>
               </AppBar>
@@ -222,9 +224,9 @@ function App() {
               <Suspense fallback={<div>Loading...</div>}>
                 <Switch>
                   <Route path="/" component={Home} exact></Route>
-                  <Route path="/todo" component={Todo} exact></Route>
+                  {/* <Route path="/todo" component={Todo} exact></Route>
                   {/* :매개변수명 -> 컴포넌트에서 변수처럼 받을 수 있음 */}
-                  <Route path="/todo/:id" component={TodoDetail}></Route>
+                  <Route path="/todo/:id" component={TodoDetail}></Route> */}
                   <Route path="/contacts" component={Contact} exact></Route>
                   <Route path="/contacts/:id" component={ContactDetail}></Route>
                   <Route path="/opendata" component={Weather}></Route>

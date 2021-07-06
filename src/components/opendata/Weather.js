@@ -70,14 +70,14 @@ const transformMapData = (sourceNow) => {
     (item) => ["PTY", "SKY"].includes(item.category) && item.fcstTime === "1500"
   );
 
-  // console.log("--category: PTY, SKY && fcstTime: 1500 --");
-  // console.log(WeatherData);
+  console.log("--category: PTY, SKY && fcstTime: 1500 --");
+  console.log(WeatherData);
 
   const categoryPty = WeatherData.filter(
     (item) => item.category === "PTY" && item.fcstValue !== "0"
   );
-  // console.log("-- category : PTY && fcstValue != 0 ");
-  // console.log(categoryPty);
+  console.log("-- category : PTY && fcstValue != 0 ");
+  console.log(categoryPty);
 
   const categorySky = Object.values(
     WeatherData.reduce((array, item) => {
@@ -88,8 +88,8 @@ const transformMapData = (sourceNow) => {
     .filter(({ PTY }) => PTY.fcstValue === "0")
     .map(({ SKY }) => SKY);
 
-  // console.log("--category: SKY(category: PTY && fcstValue === 0) --");
-  // console.log(categorySky);
+  console.log("--category: SKY(category: PTY && fcstValue === 0) --");
+  console.log(categorySky);
 
   const transformPtyImage = categoryPty.map((el) => {
     if (ptyImage[el.fcstValue]) {
@@ -101,8 +101,8 @@ const transformMapData = (sourceNow) => {
     return el;
   });
 
-  // console.log("--PTY imageURL 넣기--");
-  // console.log(transformPtyImage);
+  console.log("--PTY imageURL 넣기--");
+  console.log(transformPtyImage);
 
   const transformSkyImage = categorySky.map((el) => {
     if (skyImage[el.fcstValue]) {
@@ -114,13 +114,13 @@ const transformMapData = (sourceNow) => {
     return el;
   });
 
-  // console.log("--SKY imageURL 넣기--");
-  // console.log(transformSkyImage);
+  console.log("--SKY imageURL 넣기--");
+  console.log(transformSkyImage);
 
   const mergeCategory = [...transformPtyImage, ...transformSkyImage];
 
-  // console.log("-- merge array-- ");
-  // console.log(mergeCategory);
+  console.log("-- merge array-- ");
+  console.log(mergeCategory);
 
   const addLongitude = mergeCategory.map((item) => {
     item.longitude = item.ny;
@@ -148,8 +148,8 @@ const transformMapData = (sourceNow) => {
     return el;
   });
 
-  // console.log("--add longitude, latitude--");
-  // console.log(transLatitude);
+  console.log("--add longitude, latitude--");
+  console.log(transLatitude);
 
   const transformLocationData = transLatitude.map((el) => {
     if (areaCode[el.ny]) {
@@ -161,8 +161,8 @@ const transformMapData = (sourceNow) => {
     return el;
   });
 
-  // console.log("--areaCode -> areaName--");
-  // console.log(transformLocationData);
+  console.log("--areaCode -> areaName--");
+  console.log(transformLocationData);
 
   const mapData = transformLocationData.map(
     ({ ny, fcstValue, longitude, latitude }) => {
@@ -228,7 +228,7 @@ const Weather = () => {
       </Hidden>
       <Grid item xs={12} sm={6} lg={5}>
         <Paper className={classes.paper} style={{ height: "65vh" }}>
-          <h3>지역별 평균 기온</h3>
+          <h3>지역별 오후 날씨</h3>
           <MapChart data={transformMapData(sourceMap)} />
         </Paper>
       </Grid>
